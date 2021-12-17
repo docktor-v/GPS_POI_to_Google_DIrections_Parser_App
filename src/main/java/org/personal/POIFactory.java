@@ -35,7 +35,8 @@ public class POIFactory {
                 String latitude = POIparts[0];
                 String longitude = POIparts[1];
                 String subName = POIparts[2];
-                POIsingle = new POI(latitude, longitude, subName);
+                String city = POIparts[5];
+                POIsingle = new POI(latitude, longitude, subName, city);
                 POIList.addPOI(subName, POIsingle);
 
             }

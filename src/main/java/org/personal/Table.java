@@ -42,7 +42,7 @@ public class Table {
         POIList.values().stream().forEach(poi -> data.add(poi));
     }
 
-    public Scene getScene(Stage stage) {
+    public VBox getVBox(Stage stage) {
 
         initData(POIList.getPOIs());
         Scene scene = new Scene(new Group());
@@ -60,26 +60,26 @@ public class Table {
         substationCol.setMinWidth(200);
         substationCol.setCellValueFactory(
                 new PropertyValueFactory<POI, String>("subName"));
-        TableColumn firstNameCol = new TableColumn("Latitude");
-        firstNameCol.setMinWidth(100);
-        firstNameCol.setCellValueFactory(
+        TableColumn latitudeCol = new TableColumn("Latitude");
+        latitudeCol.setMinWidth(100);
+        latitudeCol.setCellValueFactory(
                 new PropertyValueFactory<POI, String>("latitude"));
 
-        TableColumn lastNameCol = new TableColumn("Longitude");
-        lastNameCol.setMinWidth(100);
-        lastNameCol.setCellValueFactory(
+        TableColumn longitudeCol = new TableColumn("Longitude");
+        longitudeCol.setMinWidth(100);
+        longitudeCol.setCellValueFactory(
                 new PropertyValueFactory<POI, String>("longitude"));
-//
-//        TableColumn testCol = new TableColumn("Test");
-//        lastNameCol.setMinWidth(100);
-//        lastNameCol.setCellValueFactory(
-//                new PropertyValueFactory<POI, String>("longitude"));
+
+        TableColumn cityCol = new TableColumn("City");
+        cityCol.setMinWidth(100);
+        cityCol.setCellValueFactory(
+                new PropertyValueFactory<POI, String>("city"));
 
 
         FilteredList<POI> flPOI = new FilteredList(data, p -> true);//Pass the data to a filtered list
 
         table.setItems(flPOI);//Set the table's items using the filtered list
-        table.getColumns().addAll(substationCol, firstNameCol, lastNameCol);
+        table.getColumns().addAll(substationCol, latitudeCol, longitudeCol, cityCol);
 
         //Adding ChoiceBox and TextField here!
         ChoiceBox<String> choiceBox = new ChoiceBox();
@@ -93,7 +93,7 @@ public class Table {
 //        });
       //  VBox vBox = new VBox(button);
         TextField textField = new TextField();
-        textField.setPrefWidth(300);
+        textField.setPrefWidth(500);
         textField.setPromptText("Choose field from drop down and search here");
         textField.textProperty().addListener((obs, oldValue, newValue) -> {
             switch (choiceBox.getValue())//Switch on choiceBox value
@@ -124,8 +124,8 @@ public class Table {
         vbox.setPadding(new Insets(10, 0, 0, 10));
         vbox.getChildren().addAll(label, table, hBox);
 
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
-        return (scene);
+     //   ((Group) scene.getRoot()).getChildren().addAll(vbox);
+        return (vbox);
 //        stage.setScene(scene);
 //        stage.show();
     }

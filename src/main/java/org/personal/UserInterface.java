@@ -6,12 +6,15 @@
 package org.personal;
 
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.Scanner;
+
 /**
  * @author MadMax
  */
@@ -24,19 +27,18 @@ public class UserInterface extends Application {
         POIFactory poiFactory = new POIFactory();
         HashMap<String, POI> POIMap = new HashMap<>();
         POIs POIList = new POIs();
-   //     POIList = poiFactory.createPOIs("Duke Directions Spreadsheet.csv");
-        //POIMap = POIList.getPOIs();
+
         Table table = new Table(POIList);
-
-//testing
-
+        VBox tableVBox = new VBox();
+        Scene scene = new Scene(new Group());
+//5///aaaa
         BorderPane borderPane = new BorderPane();
-        borderPane.setPrefSize(600,400);
+        borderPane.setPrefSize(600, 400);
 
         stage.setTitle(
                 "POI Parser to Google Map Directions");
-
-        stage.setScene(table.getScene(stage));
+        tableVBox = table.getVBox(stage);
+        ((Group) scene.getRoot()).getChildren().addAll(tableVBox);
         stage.show();
     }
 
