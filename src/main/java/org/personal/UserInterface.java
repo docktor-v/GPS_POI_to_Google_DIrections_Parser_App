@@ -28,7 +28,7 @@ public class UserInterface extends Application {
         //POIMap = POIList.getPOIs();
         Table table = new Table(POIList);
 
-
+//testing
 
         BorderPane borderPane = new BorderPane();
         borderPane.setPrefSize(600,400);
