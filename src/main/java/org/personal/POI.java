@@ -39,7 +39,7 @@ public class POI {
     }
     public StringProperty getCityProperty() { return subName; }
     public String getCity() {
-        return subName.get();
+        return city.get();
     }
  
 }

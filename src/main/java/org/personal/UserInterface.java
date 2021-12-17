@@ -6,9 +6,12 @@
 package org.personal;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -32,13 +35,20 @@ public class UserInterface extends Application {
         VBox tableVBox = new VBox();
         Scene scene = new Scene(new Group());
 //5///aaaa
-        BorderPane borderPane = new BorderPane();
-        borderPane.setPrefSize(600, 400);
+//        BorderPane borderPane = new BorderPane();
+//        borderPane.setPrefSize(600, 600);
 
         stage.setTitle(
                 "POI Parser to Google Map Directions");
         tableVBox = table.getVBox(stage);
+        HBox hbox = new HBox();
+        Button btn = new Button("button");
+        //tableVBox.getChildren()
+
+
+
         ((Group) scene.getRoot()).getChildren().addAll(tableVBox);
+        stage.setScene(scene);
         stage.show();
     }
 

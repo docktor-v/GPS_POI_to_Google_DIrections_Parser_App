@@ -83,7 +83,7 @@ public class Table {
 
         //Adding ChoiceBox and TextField here!
         ChoiceBox<String> choiceBox = new ChoiceBox();
-        choiceBox.getItems().addAll("Latitude", "Longitude", "Substation Name");
+        choiceBox.getItems().addAll("Latitude", "Longitude", "Substation Name", "City");
         choiceBox.setValue("Substation Name");
 //        FileChooser fileChooser = new FileChooser();
 //
@@ -93,7 +93,7 @@ public class Table {
 //        });
       //  VBox vBox = new VBox(button);
         TextField textField = new TextField();
-        textField.setPrefWidth(500);
+        textField.setPrefWidth(450);
         textField.setPromptText("Choose field from drop down and search here");
         textField.textProperty().addListener((obs, oldValue, newValue) -> {
             switch (choiceBox.getValue())//Switch on choiceBox value
@@ -105,6 +105,9 @@ public class Table {
                     flPOI.setPredicate(p -> p.getLongitude().toLowerCase().contains(newValue.toLowerCase().trim()));//filter table by last name
                     break;
                 case "Substation Name":
+                    flPOI.setPredicate(p -> p.getSubName().toLowerCase().contains(newValue.toLowerCase().trim()));//filter table by email
+                    break;
+                case "City":
                     flPOI.setPredicate(p -> p.getSubName().toLowerCase().contains(newValue.toLowerCase().trim()));//filter table by email
                     break;
             }
@@ -122,7 +125,7 @@ public class Table {
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table, hBox);
+
 
      //   ((Group) scene.getRoot()).getChildren().addAll(vbox);
         return (vbox);
