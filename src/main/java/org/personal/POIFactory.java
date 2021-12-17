@@ -38,12 +38,10 @@ public class POIFactory {
                 String city = POIparts[5];
                 POIsingle = new POI(latitude, longitude, subName, city);
                 POIList.addPOI(subName, POIsingle);
-
             }
         } catch (Exception e) {
             System.out.println("Error, file not found.");
         }
-        System.out.println(POIList.getPOIs().values().stream().count());
         return POIList;
     }
 
