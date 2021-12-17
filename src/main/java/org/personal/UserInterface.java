@@ -61,16 +61,16 @@ public class UserInterface extends Application {
         POIMap = POIList.getPOIs();
         initData(POIMap);
         FilteredList<POI> flPOI = new FilteredList(data, p -> true);//Pass the data to a filtered list
-        Table tableConst = new Table(POIList);
+        Table tableObj = new Table(POIList);
 
 
-        table = tableConst.getTable(stage);
+        table = tableObj.getTable(stage);
 
         final Label label = new Label("POI Data");
         label.setFont(new Font("Arial", 20));
 
         table = createCollumns(table, flPOI);
-
+        table.setEditable(true);
         TextField textField = new TextField();
         textField.setPrefWidth(450);
         textField.setPromptText("Choose field from drop down and search here");
@@ -107,12 +107,14 @@ public class UserInterface extends Application {
         vbox.getChildren().addAll(label, table, hBox);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
+        stage.setTitle("GPS Parser");
+        stage.setWidth(700);
+        stage.setHeight(550);
         stage.setScene(scene);
         stage.show();
     }
 
     private void initData(HashMap<String, POI> POIList) {
-
         POIList.values().stream().forEach(poi -> data.add(poi));
     }
 
