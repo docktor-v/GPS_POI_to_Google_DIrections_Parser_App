@@ -9,6 +9,8 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -19,8 +21,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.nio.file.DirectoryStream;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -36,6 +40,7 @@ public class UserInterface extends Application {
     @Override
     public void start(Stage stage) {
         Scanner scanner = new Scanner(System.in);
+
         POIFactory poiFactory = new POIFactory();
         HashMap<String, POI> POIMap = new HashMap<>();
         POIs POIList = new POIs();
@@ -51,13 +56,33 @@ public class UserInterface extends Application {
         ChoiceBox<String> choiceBox = new ChoiceBox();
         choiceBox.getItems().addAll("Latitude", "Longitude", "Substation Name", "City");
         choiceBox.setValue("Substation Name");
-//        FileChooser fileChooser = new FileChooser();
-//
-//        Button button = new Button("Select File");
-//        button.setOnAction(e -> {
+
+        Label fileLabel = new Label();
+        FileChooser fileChooser = new FileChooser();
+
+        Button fileBtn = new Button("Select File");
+//        fileBtn.setOnAction(e -> {
 //            File selectedFile = fileChooser.showOpenDialog(stage);
+//            fileLabel = selectedFile.getAbsoluteFile().toString();
 //        });
-        POIList = poiFactory.createPOIs("Duke Directions Spreadsheet.csv");
+
+        EventHandler<ActionEvent> event =
+                new EventHandler<ActionEvent>() {
+
+                    public void handle(ActionEvent e)
+                    {
+
+                        // get the file selected
+                        File file = fileChooser.showOpenDialog(stage);
+
+                        if (file != null) {
+                            fileLabel.setText(file.getAbsolutePath()
+                                    + "  selected");
+                        }
+                    }
+                };
+        fileBtn.setOnAction(event);
+      //  POIList = poiFactory.createPOIs(fileName);
         POIMap = POIList.getPOIs();
         initData(POIMap);
         FilteredList<POI> flPOI = new FilteredList(data, p -> true);//Pass the data to a filtered list
@@ -99,12 +124,17 @@ public class UserInterface extends Application {
             }
         });
 
-        HBox hBox = new HBox(choiceBox, textField);//Add choiceBox and textField to hBox
+
+
+        HBox hBox = new HBox(fileBtn);
+
+        HBox hBox2 = new HBox(choiceBox, textField, fileLabel);//Add choiceBox and textField to hBox
+        hBox2.setAlignment(Pos.CENTER_LEFT);
         hBox.setAlignment(Pos.CENTER);//Center HBox
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table, hBox);
+        vbox.getChildren().addAll(label, table, hBox2, hBox);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
         stage.setTitle("GPS Parser");
