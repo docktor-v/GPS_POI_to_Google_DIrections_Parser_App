@@ -27,9 +27,7 @@ public class UserInterface extends Application {
    //     POIList = poiFactory.createPOIs("Duke Directions Spreadsheet.csv");
         //POIMap = POIList.getPOIs();
         Table table = new Table(POIList);
-
-//testing
-
+//5
         BorderPane borderPane = new BorderPane();
         borderPane.setPrefSize(600,400);
 
