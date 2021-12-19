@@ -36,15 +36,15 @@ public class UserInterface extends Application {
 
     private final ObservableList<POI> data
             = FXCollections.observableArrayList();
+    Scanner scanner = new Scanner(System.in);
 
+    POIFactory poiFactory = new POIFactory();
+    HashMap<String, POI> POIMap = new HashMap<>();
+    POIs POIList = new POIs();
+    TableView table;
     @Override
     public void start(Stage stage) {
-        Scanner scanner = new Scanner(System.in);
 
-        POIFactory poiFactory = new POIFactory();
-        HashMap<String, POI> POIMap = new HashMap<>();
-        POIs POIList = new POIs();
-        TableView table;
 
         VBox tableVBox = new VBox();
         Scene scene = new Scene(new Group());
@@ -61,30 +61,23 @@ public class UserInterface extends Application {
         FileChooser fileChooser = new FileChooser();
 
         Button fileBtn = new Button("Select File");
-//        fileBtn.setOnAction(e -> {
-//            File selectedFile = fileChooser.showOpenDialog(stage);
-//            fileLabel = selectedFile.getAbsoluteFile().toString();
-//        });
 
-        EventHandler<ActionEvent> event =
-                new EventHandler<ActionEvent>() {
 
-                    public void handle(ActionEvent e)
-                    {
+        fileBtn.setOnAction((event)->{
 
                         // get the file selected
                         File file = fileChooser.showOpenDialog(stage);
 
                         if (file != null) {
                             fileLabel.setText(file.getAbsolutePath()
-                                    + "  selected");
-                        }
-                    }
-                };
-        fileBtn.setOnAction(event);
-      //  POIList = poiFactory.createPOIs(fileName);
-        POIMap = POIList.getPOIs();
-        initData(POIMap);
+                                    + "  selected");}
+            POIList = poiFactory.createPOIs(file);
+            POIMap = POIList.getPOIs();
+            initData(POIMap);
+        });
+
+
+
         FilteredList<POI> flPOI = new FilteredList(data, p -> true);//Pass the data to a filtered list
         Table tableObj = new Table(POIList);
 

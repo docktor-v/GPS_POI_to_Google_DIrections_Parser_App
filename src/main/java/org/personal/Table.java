@@ -14,7 +14,7 @@ public class Table {
     POIs POIList = new POIs();
 
     public Table(POIs POIList) {
-        this.POIList = poiFactory.createPOIs("Duke Directions Spreadsheet.csv");
+        this.POIList = POIList;
     }
 
     private TableView<POI> table = new TableView<POI>();
