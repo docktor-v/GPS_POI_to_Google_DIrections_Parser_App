@@ -5,6 +5,7 @@
  */
 package org.personal;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,11 +20,11 @@ public class POIFactory {
 
     }
 
-    public POIs createPOIs(String fileName) {
+    public POIs createPOIs(File fileName) {
         POI POIsingle;
         POIs POIList = new POIs();
 
-        try ( Scanner scanner = new Scanner(Paths.get(fileName))) {
+        try ( Scanner scanner = new Scanner(fileName)) {
             System.out.println("Good");
             String collumns = scanner.nextLine();
             String[] collumnParts = collumns.split(",");
