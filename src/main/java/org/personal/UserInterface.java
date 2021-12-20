@@ -58,7 +58,9 @@ public class UserInterface extends Application {
         choiceBox.setValue("Substation Name");
 
         Label fileLabel = new Label();
+        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("CSV","*.csv");
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(fileExtensions);
 
         Button fileBtn = new Button("Select File");
 
