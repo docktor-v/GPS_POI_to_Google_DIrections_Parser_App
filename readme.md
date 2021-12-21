@@ -10,3 +10,6 @@ Latitude,Longittude,Company Name,City
 40.490429,-106.842384,Steamboat Springs  CO  USA
 38.025131,-107.67588,Ouray  CO  USA
 39.247478,-106.300194,Leadville  CO  USA
+
+
+![Screen shot](https://user-images.githubusercontent.com/68287357/147003056-63428567-b891-4a10-ae8e-699adaf713a2.jpg)
