@@ -17,13 +17,13 @@ public class POI {
     private final StringProperty latitude;
     private final StringProperty longitude;
     private final StringProperty subName;
-    private final StringProperty city;
 
-    public POI(String latitude, String longitude, String subName, String city) {
+
+    public POI(String latitude, String longitude, String subName) {
         this.latitude = new SimpleStringProperty(latitude);
         this.longitude = new SimpleStringProperty(longitude);
         this.subName = new SimpleStringProperty(subName);
-        this.city = new SimpleStringProperty(city);
+
     }
 
     public String getLatitude() {return latitude.get();}
@@ -37,9 +37,6 @@ public class POI {
     public String getSubName() {
         return subName.get();
     }
-    public StringProperty getCityProperty() { return subName; }
-    public String getCity() {
-        return city.get();
-    }
- 
+
+
 }

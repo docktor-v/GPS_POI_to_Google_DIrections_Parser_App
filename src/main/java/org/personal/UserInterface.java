@@ -6,6 +6,8 @@
 package org.personal;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -26,6 +28,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.nio.file.DirectoryStream;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -42,6 +45,7 @@ public class UserInterface extends Application {
     HashMap<String, POI> POIMap = new HashMap<>();
     POIs POIList = new POIs();
     TableView table;
+
     @Override
     public void start(Stage stage) {
 
@@ -54,29 +58,33 @@ public class UserInterface extends Application {
 
 
         ChoiceBox<String> choiceBox = new ChoiceBox();
-        choiceBox.getItems().addAll("Latitude", "Longitude", "Substation Name", "City");
-        choiceBox.setValue("Substation Name");
+        choiceBox.getItems().addAll("Latitude", "Longitude", "Station Name", "City");
+        choiceBox.setValue("Station Name");
 
         Label fileLabel = new Label();
+        Label linkLabel = new Label();
+        linkLabel.setText("Link will take to Google Maps and give you directions to: ");
+        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("CSV", "*csv");
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(fileExtensions);
 
         Button fileBtn = new Button("Select File");
 
 
-        fileBtn.setOnAction((event)->{
-
-                        // get the file selected
-                        File file = fileChooser.showOpenDialog(stage);
-
-                        if (file != null) {
-                            fileLabel.setText(file.getAbsolutePath()
-                                    + "  selected");}
-            POIList = poiFactory.createPOIs(file);
-            POIMap = POIList.getPOIs();
-            initData(POIMap);
-        });
+    fileBtn.setOnAction((event) -> {
 
 
+        File file = fileChooser.showOpenDialog(stage);
+        //File file = new File("Sample Data Spreadsheet.csv");
+
+        if (file != null) {
+            fileLabel.setText(file.getAbsolutePath()
+                    + "  selected");
+        }
+        POIList = poiFactory.createPOIs(file);
+        POIMap = POIList.getPOIs();
+        initData(POIMap);
+    });
 
         FilteredList<POI> flPOI = new FilteredList(data, p -> true);//Pass the data to a filtered list
         Table tableObj = new Table(POIList);
@@ -86,9 +94,12 @@ public class UserInterface extends Application {
 
         final Label label = new Label("POI Data");
         label.setFont(new Font("Arial", 20));
+        Hyperlink link = new Hyperlink();
+          link.setText("Link will load when you open data and select a row");
 
         table = createCollumns(table, flPOI);
         table.setEditable(true);
+        table.setPrefWidth(750);
         TextField textField = new TextField();
         textField.setPrefWidth(450);
         textField.setPromptText("Choose field from drop down and search here");
@@ -96,17 +107,15 @@ public class UserInterface extends Application {
             switch (choiceBox.getValue())//Switch on choiceBox value
             {
                 case "Lattitude":
-                    flPOI.setPredicate(p -> p.getLatitude().toLowerCase().contains(newValue.toLowerCase().trim()));//filter table by first name
+                    flPOI.setPredicate(p -> p.getLatitude().toLowerCase().contains(newValue.toLowerCase().trim()));
                     break;
                 case "Longitude":
-                    flPOI.setPredicate(p -> p.getLongitude().toLowerCase().contains(newValue.toLowerCase().trim()));//filter table by last name
+                    flPOI.setPredicate(p -> p.getLongitude().toLowerCase().contains(newValue.toLowerCase().trim()));
                     break;
-                case "Substation Name":
-                    flPOI.setPredicate(p -> p.getSubName().toLowerCase().contains(newValue.toLowerCase().trim()));//filter table by email
+                case "Station Name":
+                    flPOI.setPredicate(p -> p.getSubName().toLowerCase().contains(newValue.toLowerCase().trim()));
                     break;
-                case "City":
-                    flPOI.setPredicate(p -> p.getSubName().toLowerCase().contains(newValue.toLowerCase().trim()));//filter table by email
-                    break;
+
             }
         });
 
@@ -117,22 +126,41 @@ public class UserInterface extends Application {
             }
         });
 
+        table.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue observableValue, Number number, Number t1) {
+                System.out.println("ObservableValue: " + observableValue.getValue() + " Number: " + number + "Number " + flPOI.get(t1.intValue()).getLongitude());
+                linkLabel.setText("Link below will take to Google Maps and give you directions to: "+flPOI.get(t1.intValue()).getSubName());
+                link.setText("https://www.google.com/maps/dir/Current+Location/"+flPOI.get(t1.intValue()).getLatitude()+","+flPOI.get(t1.intValue()).getLongitude());
+
+            }
+
+            public void changed(ObservableValue ov, Number new_value) {
+
+            }
+
+        });
+link.setOnAction((event) -> {
+            getHostServices().showDocument(link.getText());
+        });
 
 
-        HBox hBox = new HBox(fileBtn);
-
-        HBox hBox2 = new HBox(choiceBox, textField, fileLabel);//Add choiceBox and textField to hBox
+        HBox hBox = new HBox(fileBtn, fileLabel);
+        HBox hBox2 = new HBox(choiceBox, textField);//Add choiceBox and textFieldm to hBox
+        HBox hBox3 = new HBox(linkLabel);
+        HBox hBox4 = new HBox(link);
         hBox2.setAlignment(Pos.CENTER_LEFT);
-        hBox.setAlignment(Pos.CENTER);//Center HBox
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox4.setAlignment(Pos.CENTER_LEFT);
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table, hBox2, hBox);
+        vbox.getChildren().addAll(label, table, hBox2, hBox, hBox3, hBox4);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
         stage.setTitle("GPS Parser");
-        stage.setWidth(700);
-        stage.setHeight(550);
+        stage.setWidth(785);
+        stage.setHeight(600);
         stage.setScene(scene);
         stage.show();
     }
@@ -144,9 +172,9 @@ public class UserInterface extends Application {
     private TableView createCollumns(TableView table, FilteredList flPOI) {
         table.setItems(flPOI);//Set the table's items using the filtered list
 
-        TableColumn substationCol = new TableColumn("Substation Name");
-        substationCol.setMinWidth(200);
-        substationCol.setCellValueFactory(
+        TableColumn stationCol = new TableColumn("Station Name");
+        stationCol.setMinWidth(200);
+        stationCol.setCellValueFactory(
                 new PropertyValueFactory<POI, String>("subName"));
 
         TableColumn latitudeCol = new TableColumn("Latitude");
@@ -159,12 +187,9 @@ public class UserInterface extends Application {
         longitudeCol.setCellValueFactory(
                 new PropertyValueFactory<POI, String>("longitude"));
 
-        TableColumn cityCol = new TableColumn("City");
-        cityCol.setMinWidth(100);
-        cityCol.setCellValueFactory(
-                new PropertyValueFactory<POI, String>("city"));
 
-        table.getColumns().addAll(substationCol, latitudeCol, longitudeCol, cityCol);
+        table.getColumns().addAll(stationCol, latitudeCol, longitudeCol);
+
         return table;
     }
 

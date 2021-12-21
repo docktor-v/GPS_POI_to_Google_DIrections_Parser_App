@@ -25,8 +25,9 @@ public class POIFactory {
         POIs POIList = new POIs();
 
         try ( Scanner scanner = new Scanner(fileName)) {
-            System.out.println("Good");
+
             String collumns = scanner.nextLine();
+
             String[] collumnParts = collumns.split(",");
 
             while (scanner.hasNextLine()) {
@@ -36,12 +37,12 @@ public class POIFactory {
                 String latitude = POIparts[0];
                 String longitude = POIparts[1];
                 String subName = POIparts[2];
-                String city = POIparts[5];
-                POIsingle = new POI(latitude, longitude, subName, city);
+
+                POIsingle = new POI(latitude, longitude, subName);
                 POIList.addPOI(subName, POIsingle);
             }
         } catch (Exception e) {
-            System.out.println("Error, file not found.");
+            System.out.println(e.getMessage());
         }
         return POIList;
     }
