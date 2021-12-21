@@ -1,6 +1,7 @@
 POI: Points of Interest
 
-This app will take a simple .csv POI file which is parsed into a table. Included is a search bar to search within the table. Values in the table are selectable. Once selected, a link will activate which will give you directions to the point selected, from your current location, to the GPS coordinates of the selected point. 
+This windows based JavaFX application is intended to convert a simple .csv POI file into a searchable table, and then allow the user to select the elements of the table. Once an element (individual POI) is selected, a hyperlink is generated which gives directions to the POI from your current location to the POI location.
+
 A sample table of data is included. 
 
 Look at the Sample data file to understand how to format your data. It should be very similar to the sample.
