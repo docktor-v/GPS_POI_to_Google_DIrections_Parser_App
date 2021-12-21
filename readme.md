@@ -11,4 +11,6 @@ Latitude,Longittude,Company Name,City
 38.025131,-107.67588,Ouray  CO  USA
 39.247478,-106.300194,Leadville  CO  USA
 
-![Screen shot](https://user-images.githubusercontent.com/68287357/147003308-0712829a-be13-46c5-a7b8-9d6bfe23f80a.jpg)
+
+![Screen shot](https://user-images.githubusercontent.com/68287357/147003355-263a736c-eb0a-4da3-a3e2-d542b931cac4.jpg)
+![Screen shot 2](https://user-images.githubusercontent.com/68287357/147003574-5ba3fe00-40b0-45ee-9256-6791e4f772d0.jpg)
