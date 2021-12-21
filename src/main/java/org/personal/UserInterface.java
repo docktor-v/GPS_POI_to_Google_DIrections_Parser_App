@@ -71,21 +71,20 @@ public class UserInterface extends Application {
         Button fileBtn = new Button("Select File");
 
 
-        fileBtn.setOnAction((event) -> {
+    fileBtn.setOnAction((event) -> {
 
-            // get the file selected
-//            File file = fileChooser.showOpenDialog(stage);
-            File file = new File("Sample Data Spreadsheet.csv");
 
-            if (file != null) {
-                fileLabel.setText(file.getAbsolutePath()
-                        + "  selected");
-            }
-            POIList = poiFactory.createPOIs(file);
-            POIMap = POIList.getPOIs();
-            initData(POIMap);
-        });
+        File file = fileChooser.showOpenDialog(stage);
+        //File file = new File("Sample Data Spreadsheet.csv");
 
+        if (file != null) {
+            fileLabel.setText(file.getAbsolutePath()
+                    + "  selected");
+        }
+        POIList = poiFactory.createPOIs(file);
+        POIMap = POIList.getPOIs();
+        initData(POIMap);
+    });
 
         FilteredList<POI> flPOI = new FilteredList(data, p -> true);//Pass the data to a filtered list
         Table tableObj = new Table(POIList);
@@ -96,7 +95,7 @@ public class UserInterface extends Application {
         final Label label = new Label("POI Data");
         label.setFont(new Font("Arial", 20));
         Hyperlink link = new Hyperlink();
-          link.setText("http://example.com");
+          link.setText("Link will load when you open data and select a row");
 
         table = createCollumns(table, flPOI);
         table.setEditable(true);
@@ -132,13 +131,17 @@ public class UserInterface extends Application {
             public void changed(ObservableValue observableValue, Number number, Number t1) {
                 System.out.println("ObservableValue: " + observableValue.getValue() + " Number: " + number + "Number " + flPOI.get(t1.intValue()).getLongitude());
                 linkLabel.setText("Link below will take to Google Maps and give you directions to: "+flPOI.get(t1.intValue()).getSubName());
-                link.set
+                link.setText("https://www.google.com/maps/dir/Current+Location/"+flPOI.get(t1.intValue()).getLatitude()+","+flPOI.get(t1.intValue()).getLongitude());
+
             }
 
             public void changed(ObservableValue ov, Number new_value) {
 
             }
 
+        });
+link.setOnAction((event) -> {
+            getHostServices().showDocument(link.getText());
         });
 
 
@@ -157,7 +160,7 @@ public class UserInterface extends Application {
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
         stage.setTitle("GPS Parser");
         stage.setWidth(785);
-        stage.setHeight(570);
+        stage.setHeight(600);
         stage.setScene(scene);
         stage.show();
     }

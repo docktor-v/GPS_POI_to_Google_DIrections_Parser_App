@@ -25,8 +25,9 @@ public class POIFactory {
         POIs POIList = new POIs();
 
         try ( Scanner scanner = new Scanner(fileName)) {
-            System.out.println("Good");
+
             String collumns = scanner.nextLine();
+
             String[] collumnParts = collumns.split(",");
 
             while (scanner.hasNextLine()) {
@@ -41,7 +42,7 @@ public class POIFactory {
                 POIList.addPOI(subName, POIsingle);
             }
         } catch (Exception e) {
-            System.out.println("Error, file not found.");
+            System.out.println(e.getMessage());
         }
         return POIList;
     }
