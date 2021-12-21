@@ -12,4 +12,4 @@ Latitude,Longittude,Company Name,City
 39.247478,-106.300194,Leadville  CO  USA
 
 
-![Screen shot](https://user-images.githubusercontent.com/68287357/147003056-63428567-b891-4a10-ae8e-699adaf713a2.jpg)
+![Screen shot](https://user-images.githubusercontent.com/68287357/147003247-f1ff68c6-d175-425b-85b9-e6720e653b9b.jpg)
