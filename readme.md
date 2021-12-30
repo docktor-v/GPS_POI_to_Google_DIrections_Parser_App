@@ -14,6 +14,8 @@ Look at the Sample data file to understand how to format your data. It should be
 <b>Instructions on running</b>
 If you only want to run the program as-is, copy the file "POI_Directions_Parser-1.0.jar". This file is under the "target" folder.
 You will need to have Java SDK 11 or earlier.
-In Windows, open terminal, navigate to the folder where the .jar file is found.
-Enter "Java -jar POI_Directions_Parser-1.0.jar" and the application should load.
+1. In Windows, open terminal
+2. Navigate to the folder where the .jar file is found.
+3. Enter "Java -jar POI_Directions_Parser-1.0.jar" and the application should load.
+
 Depencencies are set for Linux, Mac, and Windows. Only Windows has been tested.
